@@ -19,7 +19,15 @@ form.addEventListener ('submit', function (event) {
 })
 
 //helper functions
+function errormsg(){
+    let errordiv = document.createElement('div')
+        let errormsg = document.createTextNode('This field is required')
+        errordiv.appendChild(errormsg)
+        document.getElementById('name-field').appendChild(errordiv)
 
+        
+
+}
 
 //validating functions
 function validateName (){
@@ -36,7 +44,7 @@ function validateName (){
         console.log('name is not valid')
         parentEl.classList.add('input-invalid')
         parentEl.classList.remove('input-valid')
-
+        errormsg()
     }
 
 
@@ -56,7 +64,7 @@ function validateCarYear (){
         console.log('year is not valid')
         parentEl.classList.add('input-invalid')
         parentEl.classList.remove('input-valid')
-
+        errormsg()
     }
 
 
@@ -76,7 +84,7 @@ function validateCarMake (){
         console.log('make is not valid')
         parentEl.classList.add('input-invalid')
         parentEl.classList.remove('input-valid')
-
+        errormsg()
     }
 }
 
@@ -93,8 +101,9 @@ function validateCarMake (){
             console.log('model is invalid')
             parentEl.classList.remove('input-valid')
             parentEl.classList.add('input-invalid')
+            errormsg()
         }
-
+          
     }
 
 
@@ -112,7 +121,7 @@ function validateCarMake (){
             console.log('date is not valid')
             parentEl.classList.add('input-invalid')
             parentEl.classList.remove('input-valid')
-    
+            errormsg()
         }
 }
 
@@ -130,7 +139,7 @@ function validateNumOfDays(){
         console.log('number of days is not valid')
         parentEl.classList.add('input-invalid')
         parentEl.classList.remove('input-valid')
-
+        errormsg()
     }
 }
 
@@ -148,7 +157,7 @@ function validateCC(){
         console.log('credit card number is not valid')
         parentEl.classList.add('input-invalid')
         parentEl.classList.remove('input-valid')
-
+        errormsg()
     }
 }
 
@@ -166,7 +175,7 @@ function validateCVV(){
         console.log('CVV is not valid')
         parentEl.classList.add('input-invalid')
         parentEl.classList.remove('input-valid')
-
+        errormsg()
     }
 }
 
@@ -184,6 +193,6 @@ function validateExpiration (){
         console.log('expiration date is not valid')
         parentEl.classList.add('input-invalid')
         parentEl.classList.remove('input-valid')
-
+        errormsg()
     }
 }
