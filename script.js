@@ -4,8 +4,12 @@ let form = document.querySelector('#parking-form')
 let name
 let formIsValid
 
+
+
 form.addEventListener ('submit', function (event) {
+    
     event.preventDefault()
+    //removeErrorMessage()
     validateName()
     validateCarYear()
     validateCarMake()
@@ -14,13 +18,14 @@ form.addEventListener ('submit', function (event) {
     validateNumOfDays()
     validateCC()
     validateCVV()
-    validateExpiration()
-    removeErrorMessage()
-      
-
+    validateExpiration()   
 })
 
 //helper functions
+/*function removeErrorMessage () {
+    let errorDiv = document.querySelector('#errordiv')
+    errorDiv.innerHTML = ''
+}*/
 
 function makeValid(parentElement){
     parentElement.classList.add('input-valid')
@@ -62,7 +67,7 @@ function validateCarYear (){
     let carYearValue = carYearInput.value 
     let yearParent = carYearInput.parentElement 
 
-    if(carYearValue > 1900 ){
+    if(Number.isInteger(carYearValue) && carYearValue > 1900 && carYearValue <= 2020 ){
         console.log('year is valid')
        makeValid(yearParent)
 
@@ -110,8 +115,12 @@ function validateCarMake (){
         let startDateInput = document.querySelector('#start-date')
         let startDateValue = startDateInput.value 
         let startdateparent = startDateInput.parentElement 
-    
-        if(startDateValue){
+        let todaysDate = new Date()
+        console.log (todaysDate)
+        //determine current date and store in variable
+        //compare to startDateValue
+
+        if(startDateValue > todaysDate){
             console.log('date is valid')
            makeValid(startdateparent)
     
@@ -126,8 +135,8 @@ function validateNumOfDays(){
     let numOfDaysinput = document.querySelector('#days')
     let numOfDaysValue = numOfDaysinput.value
     let numOfDaysParent = numOfDaysinput.parentElement
-
-    if(numOfDaysValue){
+    
+    if(Number.isInteger(numOfDaysValue) && numOfDaysValue >= 1 && numOfDaysValue <= 30){
         console.log('number of days is valid')
         makeValid(numOfDaysParent)
 
@@ -158,8 +167,9 @@ function validateCVV(){
     let cvvinput = document.querySelector('#cvv')
     let cvvValue = cvvinput.value
     let cvvParent= cvvinput.parentElement
-
-    if(cvvValue){
+    let cvvregex= new RegExp("^[0-9]{3}$")
+    //must be a 3 digit number (regx?)
+    if(cvvValue && cvvregex.test(cvvValue)){
         console.log('CVV is valid')
         makeValid(cvvParent)
 
