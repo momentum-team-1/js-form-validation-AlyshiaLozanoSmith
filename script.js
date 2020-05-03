@@ -36,6 +36,7 @@ function makeValid(parentElement){
  function makeInvalid(parentElement){
     parentElement.classList.add('input-invalid')
     parentElement.classList.remove('input-valid')
+    formIsValid = false
 }
 
 function errormsg(fieldID){
@@ -113,14 +114,17 @@ function validateCarMake (){
 
     function validateStartDate (){
         let startDateInput = document.querySelector('#start-date')
-        let startDateValue = startDateInput.value 
+        let startDateValue = startDateInput.value
+        console.log(startDateValue)
+        startDateValue = new Date(startDateValue)
         let startdateparent = startDateInput.parentElement 
         let todaysDate = new Date()
         console.log (todaysDate)
         //determine current date and store in variable
         //compare to startDateValue
+        //need to convert startDateValue into date object to compare to todaysDate
 
-        if(startDateValue > todaysDate){
+        if( startDateValue > todaysDate){
             console.log('date is valid')
            makeValid(startdateparent)
     
@@ -185,8 +189,14 @@ function validateExpiration (){
     let expirationinput = document.querySelector('#expiration')
     let expirationValue = expirationinput.value
     let expirationparent = expirationinput.parentElement
+    expirationValue = new Date(expirationValue)
+    let expMonth = expirationValue.getMonth() +1
+    let expYear = expirationValue.getFullYear()
+     
+    let validMonth = todaysDate.getMonth() +1
+    let validYear = todaysDate.getFullYear() 
 
-    if(expirationValue){
+    if(expirationValue && expMonth <= validMonth && expYear <= validMonth){
         console.log('expiration date is valid')
         makeValid(expirationparent)
 
@@ -195,4 +205,13 @@ function validateExpiration (){
         makeInvalid(expirationparent)
         errormsg('expiration-field')
     }
+}
+
+function totalCost (numOfDaysValue, startDateValue){
+    //loop (?) through number of days to find if weekday or weekend
+    //determine how many weekdays(5) and weekend days (7)
+    //find sum  
+    //print total in new div at click
+    //total should disappear if form becomes invalid
+    
 }
