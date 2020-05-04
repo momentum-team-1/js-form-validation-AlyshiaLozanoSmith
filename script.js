@@ -46,9 +46,9 @@ function errormsg(fieldID){
     document.getElementById(fieldID).appendChild(errordiv)
 }
 
-/*function luhnCheck(val) {
+function luhnCheck() {
     var sum = 0;
-    for (var i = 0; i < val.length; i++) {
+    for (var i = 0; i < CCValue.length; i++) {
         var intVal = parseInt(val.substr(i, 1));
         if (i % 2 == 0) {
             intVal *= 2;
@@ -59,7 +59,7 @@ function errormsg(fieldID){
         sum += intVal;
     }
     return (sum % 10) == 0;
-}*/
+}
 
 //validating functions
 function validateName (){
@@ -181,7 +181,7 @@ function validateCC(){
         makeInvalid(CCParent)
         errormsg('credit-card-field')
     }
-    //luhncheck()
+   return luhncheck(CCValue)
 }
 
 function validateCVV(){
@@ -208,18 +208,18 @@ function validateExpiration (){
     let expirationparent = expirationinput.parentElement
 
     expirationValue = new Date(expirationValue)
-    let expMonth = expirationValue.getMonth() +1
+    let expMonth = expirationValue.getMonth() 
     let expYear = expirationValue.getFullYear()
     let todaysDate = new Date()
-    let validMonth = todaysDate.getMonth() +1
+    let validMonth = todaysDate.getMonth()
     let validYear = todaysDate.getFullYear() 
     
 
-    if(expirationValue && expMonth > validMonth && expYear > validYear){
+    if(expirationValue && expYear >= validYear && expMonth >= validMonth){
         console.log('expiration date is valid')
         makeValid(expirationparent)
 
-    }else{
+    }else {
         console.log('expiration date is not valid')
         makeInvalid(expirationparent)
         errormsg('expiration-field')
