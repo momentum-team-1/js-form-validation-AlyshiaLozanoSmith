@@ -27,6 +27,21 @@ form.addEventListener ('submit', function (event) {
     errorDiv.innerHTML = ''
 }*/
 
+/*function luhnCheck() {
+    var sum = 0;
+    for (var i = 0; i < CCValue.length; i++) {
+        var intVal = parseInt(CCValue.substr(i, 1));
+        if (i % 2 == 0) {
+            intVal *= 2;
+            if (intVal > 9) {
+                intVal = 1 + (intVal % 10);
+            }
+        }
+        sum += intVal;
+    }
+    return (sum % 10) == 0;
+}*/
+
 function makeValid(parentElement){
     parentElement.classList.add('input-valid')
     parentElement.classList.remove('input-invalid')
@@ -153,6 +168,7 @@ function validateNumOfDays(){
     }
 }
 
+
 function validateCC(){
     let CCinput = document.querySelector('#credit-card')
     let CCValue = CCinput.value
@@ -168,22 +184,10 @@ function validateCC(){
         makeInvalid(CCParent)
         errormsg('credit-card-field')
     }
-   return luhncheck(CCValue)
+   
 }
-function luhnCheck() {
-    var sum = 0;
-    for (var i = 0; i < CCValue.length; i++) {
-        var intVal = parseInt(val.substr(i, 1));
-        if (i % 2 == 0) {
-            intVal *= 2;
-            if (intVal > 9) {
-                intVal = 1 + (intVal % 10);
-            }
-        }
-        sum += intVal;
-    }
-    return (sum % 10) == 0;
-}
+
+
 
 function validateCVV(){
     let cvvinput = document.querySelector('#cvv')
@@ -200,6 +204,7 @@ function validateCVV(){
        makeInvalid(cvvParent)
         errormsg("cvv-field")
     }
+    //return luhnfunction()
 }
 
 
