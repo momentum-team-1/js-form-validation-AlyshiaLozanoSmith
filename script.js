@@ -9,23 +9,19 @@ let formIsValid
 form.addEventListener ('submit', function (event) {
     
     event.preventDefault()
-    //removeErrorMessage()
+    
     validateName()
-    validateCarYear()
-    validateCarMake()
-    validateCarModel()
+    validateCar()
     validateStartDate()
     validateNumOfDays()
     validateCC()
     validateCVV()
     validateExpiration()   
+    //removeErrorMessage()
 })
 
 //helper functions
-/*function removeErrorMessage () {
-    let errorDiv = document.querySelector('#errordiv')
-    errorDiv.innerHTML = ''
-}*/
+
 
 function luhnCheck(num) {
     var sum = 0;
@@ -61,45 +57,69 @@ function errormsg(fieldID){
     document.getElementById(fieldID).appendChild(errordiv)
 }
 
+/*function removeErrorMessage () {
+    let errormsg = document.getElementById('errordiv')
+    errormsg.remove() 
+}*/
+
 
 
 //validating functions
 function validateName (){
     let nameInput = document.querySelector('#name')
     let nameValue = nameInput.value 
-    let nameParent = nameInput.parentElement 
+    let nameParent = nameInput.parentElement
+    document.getElementsByTagName("label")[0].setAttribute("id", "name-label")
+    let nameLabel = document.querySelector('#name-label') 
 
     if(nameValue){
         console.log('name is valid')
         makeValid(nameParent)
+        nameLabel.textContent = 'Name'
 
     }else{
         console.log('name is not valid')
        makeInvalid(nameParent)
-       errormsg('name-field')
+       nameLabel.textContent = 'Name is not valid'
+       
     }
 }
 
-function validateCarYear (){
+function validateCar (){
     let carYearInput = document.querySelector('#car-year')
     let carYearValue = carYearInput.value 
-    let yearParent = carYearInput.parentElement 
-
-    if(Number.isInteger(carYearValue) && carYearValue > 1900 && carYearValue <= 2020 ){
+    let carField = document.querySelector('#car-field')
+    carField = carField.parentElement
+    let carModelInput = document.querySelector('#car-model')
+    let carModelValue = carModelInput.value
+    let carMakeInput = document.querySelector('#car-make')
+    let carMakeValue = carMakeInput.value 
+    document.getElementsByTagName('label')[1].setAttribute('id', 'car-year-label')
+    let carLabel = document.querySelector('#car-year-label') 
+  
+    if(Number.isInteger(carYearValue) && carYearValue > 1900 && carYearValue <= 2020 && carModelValue !== '' && carMakeValue !== ''){
         console.log('year is valid')
-       makeValid(yearParent)
+       makeValid(carField)
+       carLabel.textContent='Car'
 
-    }else{
-        console.log('year is not valid')
-       makeInvalid(yearParent)
-        errormsg('car-field')
+    }else if(carYearValue === '' && carModelValue === '' && carMakeValue === ''){
+        console.log('car is not valid')
+       makeInvalid(carField)
+       carLabel.textContent = 'Year, Make, and Model are invalid'
+    } else if (Number.isInteger(carYearValue) && carYearValue > 1900 && carYearValue <= 2020 && carMakeValue && carModelValue ===''){
+        makeInvalid(carField)
+        carLabel.textContent = 'Model is invalid'
+    } else if ( carMakeValue && carModelValue && carYearValue === ''){
+        makeInvalid(carField)
+        carLabel.textContent = 'year is invalid'
+    } else if (Number.isInteger(carYearValue) && carYearValue > 1900 && carYearValue <= 2020 && carModelValue && carMakeValue === ''){
+        makeInvalid(carField)
+        carLabel.textContent = 'Make is invalid'
     }
 }
 
-function validateCarMake (){
-    let carMakeInput = document.querySelector('#car-make')
-    let carMakeValue = carMakeInput.value 
-    let makeparent = carMakeInput.parentElement 
+/*function validateCarMake (){
+     
 
     if(carMakeValue){
         console.log('make is valid')
@@ -113,9 +133,7 @@ function validateCarMake (){
 }
 
     function validateCarModel() {
-        let carModelInput = document.querySelector('#car-model')
-        let carModelValue = carModelInput.value
-        let modelparent = carModelInput.parentElement
+       
 
         if (carModelValue){
             console.log('model is valid')
@@ -126,7 +144,7 @@ function validateCarMake (){
             errormsg('car-field')
         }
           
-    }
+    }*/
 
 
     function validateStartDate (){
