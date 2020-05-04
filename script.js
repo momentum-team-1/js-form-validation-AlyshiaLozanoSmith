@@ -27,10 +27,10 @@ form.addEventListener ('submit', function (event) {
     errorDiv.innerHTML = ''
 }*/
 
-/*function luhnCheck() {
+function luhnCheck(num) {
     var sum = 0;
-    for (var i = 0; i < CCValue.length; i++) {
-        var intVal = parseInt(CCValue.substr(i, 1));
+    for (var i = 0; i < num.length; i++) {
+        var intVal = parseInt(num.substr(i, 1));
         if (i % 2 == 0) {
             intVal *= 2;
             if (intVal > 9) {
@@ -40,7 +40,7 @@ form.addEventListener ('submit', function (event) {
         sum += intVal;
     }
     return (sum % 10) == 0;
-}*/
+}
 
 function makeValid(parentElement){
     parentElement.classList.add('input-valid')
@@ -175,7 +175,7 @@ function validateCC(){
     let CCParent = CCinput.parentElement
     let CCregex = new RegExp ('^[0-9]{16}$')
 
-    if(CCValue && CCregex.test(CCValue)){
+    if(CCValue && CCregex.test(CCValue) && luhnCheck(CCValue)){
         console.log('credit card number of days is valid')
         makeValid(CCParent)
 
