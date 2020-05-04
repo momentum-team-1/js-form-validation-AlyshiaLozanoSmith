@@ -96,26 +96,18 @@ function validateCar (){
     let carMakeValue = carMakeInput.value 
     document.getElementsByTagName('label')[1].setAttribute('id', 'car-year-label')
     let carLabel = document.querySelector('#car-year-label') 
+    
   
     if(Number.isInteger(carYearValue) && carYearValue > 1900 && carYearValue <= 2020 && carModelValue !== '' && carMakeValue !== ''){
         console.log('year is valid')
        makeValid(carField)
        carLabel.textContent='Car'
 
-    }else if(carYearValue === '' && carModelValue === '' && carMakeValue === ''){
-        console.log('car is not valid')
+    }else {
+        
        makeInvalid(carField)
        carLabel.textContent = 'Year, Make, and Model are invalid'
-    } else if (Number.isInteger(carYearValue) && carYearValue > 1900 && carYearValue <= 2020 && carMakeValue && carModelValue ===''){
-        makeInvalid(carField)
-        carLabel.textContent = 'Model is invalid'
-    } else if ( carMakeValue && carModelValue && carYearValue === ''){
-        makeInvalid(carField)
-        carLabel.textContent = 'year is invalid'
-    } else if (Number.isInteger(carYearValue) && carYearValue > 1900 && carYearValue <= 2020 && carModelValue && carMakeValue === ''){
-        makeInvalid(carField)
-        carLabel.textContent = 'Make is invalid'
-    }
+    } 
 }
 
 /*function validateCarMake (){
@@ -155,6 +147,8 @@ function validateCar (){
         let startdateparent = startDateInput.parentElement 
         let todaysDate = new Date()
         console.log (todaysDate)
+        document.getElementsByTagName('label')[2].setAttribute('id', 'start-date-label')
+        let startDateLabel = document.querySelector('#start-date-label')
         //determine current date and store in variable
         //compare to startDateValue
         //need to convert startDateValue into date object to compare to todaysDate
@@ -162,11 +156,12 @@ function validateCar (){
         if( startDateValue > todaysDate){
             console.log('date is valid')
            makeValid(startdateparent)
+           startDateLabel.textContent = 'Start Date'
     
         }else{
             console.log('date is not valid')
             makeInvalid(startdateparent)
-            errormsg('start-date-field')
+            startDateLabel.textContent='Start date is invalid'
         }
 }
 
@@ -174,15 +169,18 @@ function validateNumOfDays(){
     let numOfDaysinput = document.querySelector('#days')
     let numOfDaysValue = numOfDaysinput.value
     let numOfDaysParent = numOfDaysinput.parentElement
-    
+    document.getElementsByTagName('label')[3].setAttribute('id', 'days-label')
+    let daysLabel = document.querySelector('#days-label')
+
     if(Number.isInteger(numOfDaysValue) && numOfDaysValue >= 1 && numOfDaysValue <= 30){
         console.log('number of days is valid')
         makeValid(numOfDaysParent)
+        daysLabel.textContent = 'Number of Days'
 
     }else{
         console.log('number of days is not valid')
         makeInvalid(numOfDaysParent)
-        errormsg('days-field')
+        daysLabel.textContent = 'Number of days is not valid'
     }
 }
 
@@ -192,15 +190,18 @@ function validateCC(){
     let CCValue = CCinput.value
     let CCParent = CCinput.parentElement
     let CCregex = new RegExp ('^[0-9]{16}$')
+    document.getElementsByTagName('label')[4].setAttribute('id', 'CC-label')
+    let CCLabel = document.querySelector('#CC-Label')
 
     if(CCValue && CCregex.test(CCValue) && luhnCheck(CCValue)){
         console.log('credit card number of days is valid')
         makeValid(CCParent)
+        CCLabel.textContent = 'Credit Card'
 
     }else{
         console.log('credit card number is not valid')
         makeInvalid(CCParent)
-        errormsg('credit-card-field')
+        CCLabel.textContent = 'Credit Card Number is invalid'
     }
    
 }
@@ -212,17 +213,19 @@ function validateCVV(){
     let cvvValue = cvvinput.value
     let cvvParent= cvvinput.parentElement
     let cvvregex= new RegExp("^[0-9]{3}$")
+    document.getElementsByTagName('label')[5].setAttribute('id', 'cvv-label')
+    let cvvLabel = document.querySelector('#cvv-label')
     //must be a 3 digit number (regx?)
     if(cvvValue && cvvregex.test(cvvValue)){
         console.log('CVV is valid')
         makeValid(cvvParent)
+        cvvLabel.textContent = 'CVV'
 
     }else{
         console.log('CVV is not valid')
        makeInvalid(cvvParent)
-        errormsg("cvv-field")
+        cvvLabel.textContent = 'CVV is invalid'
     }
-    //return luhnfunction()
 }
 
 
@@ -230,6 +233,8 @@ function validateExpiration (){
     let expirationinput = document.querySelector('#expiration')
     let expirationValue = expirationinput.value
     let expirationparent = expirationinput.parentElement
+    document.getElementsByTagName('label')[6].setAttribute('id', 'exp-label')
+    let expLabel = document.querySelector('#exp-label')
 
     expirationValue = new Date(expirationValue)
     let expMonth = expirationValue.getMonth() 
@@ -242,11 +247,12 @@ function validateExpiration (){
     if(expirationValue && expYear >= validYear && expMonth >= validMonth){
         console.log('expiration date is valid')
         makeValid(expirationparent)
+        expLabel.textContent ='Expiration Date'
 
     }else {
         console.log('expiration date is not valid')
         makeInvalid(expirationparent)
-        errormsg('expiration-field')
+        expLabel.textContent ='Expiration Date is not valid'
     }
 }
 
