@@ -17,6 +17,7 @@ form.addEventListener ('submit', function (event) {
     validateCC()
     validateCVV()
     validateExpiration()   
+    totalCost()
     
 })
 
@@ -258,26 +259,21 @@ function validateExpiration (){
     }
 }
 
-    /*function totalCost() {
+    function totalCost() {
+
         if (
-          nameField.classList.contains("input-valid") === true &&
-          carField.classList.contains("input-valid") === true &&
-          startDateField.classList.contains("input-valid") === true &&
-          daysField.classList.contains("input-valid") === true &&
-          creditCardField.classList.contains("input-valid") === true &&
-          cvvField.classList.contains("input-valid") === true &&
-          expirationField.classList.contains("input-valid") === true
+          formIsValid
         ) {
           let edate = new Date(document.querySelector("#start-date").valueAsNumber);
           let dow = edate.getDay();
           let price = 0;
           for (let n = 0; n < document.querySelector("#days").value; n++) {
-            if (dow == 5 || dow == 6) price += 7;
+            if (dow == 0 || dow == 6) price += 7;
             else price += 5;
             dow++;
             if (dow > 6) dow = 0;
           }
           document.querySelector("#total").textContent = "Total: $" + price + ".00";
         } else {document.querySelector("#total").textContent = "";}
-      }*/
+      }
     
