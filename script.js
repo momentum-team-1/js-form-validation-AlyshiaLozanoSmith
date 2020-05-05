@@ -258,7 +258,7 @@ function validateExpiration (){
     }
 }
 
-    function totalCost() {
+    /*function totalCost() {
         if (
           nameField.classList.contains("input-valid") === true &&
           carField.classList.contains("input-valid") === true &&
@@ -279,5 +279,5 @@ function validateExpiration (){
           }
           document.querySelector("#total").textContent = "Total: $" + price + ".00";
         } else {document.querySelector("#total").textContent = "";}
-      }
+      }*/
     
