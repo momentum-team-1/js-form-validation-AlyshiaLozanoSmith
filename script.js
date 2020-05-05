@@ -17,7 +17,7 @@ form.addEventListener ('submit', function (event) {
     validateCC()
     validateCVV()
     validateExpiration()   
-    //removeErrorMessage()
+    
 })
 
 //helper functions
@@ -87,6 +87,7 @@ function validateName (){
 
 function validateCar (){
     let carYearInput = document.querySelector('#car-year')
+    carYearInput.setAttribute('type', 'number')
     let carYearValue = carYearInput.value 
     let carField = document.querySelector('#car-field')
     carField = carField.parentElement
@@ -97,8 +98,9 @@ function validateCar (){
     document.getElementsByTagName('label')[1].setAttribute('id', 'car-year-label')
     let carLabel = document.querySelector('#car-year-label') 
     
+    
   
-    if(Number.isInteger(carYearValue) && carYearValue > 1900 && carYearValue <= 2020 && carModelValue !== '' && carMakeValue !== ''){
+    if(carYearValue > 1900 && carYearValue <= 2020 && carModelValue !== '' && carMakeValue !== ''){
         console.log('year is valid')
        makeValid(carField)
        carLabel.textContent='Car'
@@ -167,12 +169,14 @@ function validateCar (){
 
 function validateNumOfDays(){
     let numOfDaysinput = document.querySelector('#days')
+    numOfDaysinput.setAttribute('type', 'number')
     let numOfDaysValue = numOfDaysinput.value
     let numOfDaysParent = numOfDaysinput.parentElement
     document.getElementsByTagName('label')[3].setAttribute('id', 'days-label')
     let daysLabel = document.querySelector('#days-label')
+    
 
-    if(Number.isInteger(numOfDaysValue) && numOfDaysValue >= 1 && numOfDaysValue <= 30){
+    if(numOfDaysValue >= 1 && numOfDaysValue <= 30){
         console.log('number of days is valid')
         makeValid(numOfDaysParent)
         daysLabel.textContent = 'Number of Days'
@@ -191,7 +195,7 @@ function validateCC(){
     let CCParent = CCinput.parentElement
     let CCregex = new RegExp ('^[0-9]{16}$')
     document.getElementsByTagName('label')[4].setAttribute('id', 'CC-label')
-    let CCLabel = document.querySelector('#CC-Label')
+    let CCLabel = document.querySelector('#CC-label')
 
     if(CCValue && CCregex.test(CCValue) && luhnCheck(CCValue)){
         console.log('credit card number of days is valid')
@@ -231,20 +235,18 @@ function validateCVV(){
 
 function validateExpiration (){
     let expirationinput = document.querySelector('#expiration')
-    let expirationValue = expirationinput.value
+    let expirationValue =  expirationinput.value
+    let expMonth = expirationValue.substring(0,2)
+    let expYear = expirationValue.substring(3)
+    let todaysDate = new Date ()
+    let todayMonth = todaysDate.getMonth() +1
+    let todayYear =todaysDate.getFullYear() %100 
     let expirationparent = expirationinput.parentElement
+    
     document.getElementsByTagName('label')[6].setAttribute('id', 'exp-label')
     let expLabel = document.querySelector('#exp-label')
-
-    expirationValue = new Date(expirationValue)
-    let expMonth = expirationValue.getMonth() 
-    let expYear = expirationValue.getFullYear()
-    let todaysDate = new Date()
-    let validMonth = todaysDate.getMonth()
-    let validYear = todaysDate.getFullYear() 
-    
-
-    if(expirationValue && expYear >= validYear && expMonth >= validMonth){
+  
+    if(expYear >= todayYear && expMonth >= todayMonth){
         console.log('expiration date is valid')
         makeValid(expirationparent)
         expLabel.textContent ='Expiration Date'
@@ -256,11 +258,26 @@ function validateExpiration (){
     }
 }
 
-function totalCost (numOfDaysValue, startDateValue){
-    //loop (?) through number of days to find if weekday or weekend
-    //determine how many weekdays(5) and weekend days (7)
-    //find sum  
-    //print total in new div at click
-    //total should disappear if form becomes invalid
+    function totalCost() {
+        if (
+          nameField.classList.contains("input-valid") === true &&
+          carField.classList.contains("input-valid") === true &&
+          startDateField.classList.contains("input-valid") === true &&
+          daysField.classList.contains("input-valid") === true &&
+          creditCardField.classList.contains("input-valid") === true &&
+          cvvField.classList.contains("input-valid") === true &&
+          expirationField.classList.contains("input-valid") === true
+        ) {
+          let edate = new Date(document.querySelector("#start-date").valueAsNumber);
+          let dow = edate.getDay();
+          let price = 0;
+          for (let n = 0; n < document.querySelector("#days").value; n++) {
+            if (dow == 5 || dow == 6) price += 7;
+            else price += 5;
+            dow++;
+            if (dow > 6) dow = 0;
+          }
+          document.querySelector("#total").textContent = "Total: $" + price + ".00";
+        } else {document.querySelector("#total").textContent = "";}
+      }
     
-}
