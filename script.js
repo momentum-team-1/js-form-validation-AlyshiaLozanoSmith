@@ -1,5 +1,5 @@
 
- console.log('Add validation!');
+
 let form = document.querySelector('#parking-form')
 let name
 let formIsValid
@@ -17,7 +17,7 @@ form.addEventListener ('submit', function (event) {
     validateCC()
     validateCVV()
     validateExpiration()   
-    totalCost()
+    giveCost()
     
 })
 
@@ -259,21 +259,26 @@ function validateExpiration (){
     }
 }
 
-    function totalCost() {
-
-        if (
-          formIsValid
-        ) {
-          let edate = new Date(document.querySelector("#start-date").valueAsNumber);
-          let dow = edate.getDay();
-          let price = 0;
-          for (let n = 0; n < document.querySelector("#days").value; n++) {
-            if (dow == 0 || dow == 6) price += 7;
-            else price += 5;
-            dow++;
-            if (dow > 6) dow = 0;
-          }
-          document.querySelector("#total").textContent = "Total: $" + price + ".00";
-        } else {document.querySelector("#total").textContent = "";}
-      }
+function giveCost() {
+    let dateInput = document.querySelector("#start-date")
+        let dateInfo = dateInput.valueAsNumber 
+        let dateParent = dateInput.parentElement
+        let day = new Date(dateInfo).getDay();
+        let daysInput = document.querySelector("#days")
+        let daysInfo = daysInput.value 
+        dateInfo = new Date(dateInfo);
+        let cost = 0
+        let week = new Array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+        for (i = 0; i < daysInfo; i++) {
+            if (day === 5 || day === 6) {
+                cost += 7;
+            }else {
+                cost += 5;
+            }
+            console.log(cost)
+            day = (day % 7) + 1;
+        }  
+        window.alert("Your total is $" + cost + ".00")
+    }
     
+      
