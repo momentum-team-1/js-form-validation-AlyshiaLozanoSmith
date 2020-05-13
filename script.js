@@ -1,30 +1,31 @@
-
-
 let form = document.querySelector('#parking-form')
-let name
-let formIsValid
+        let name
+        let formIsValid
 
+class Form {
+    constructor(){
+        
 
-
-form.addEventListener ('submit', function (event) {
+        form.addEventListener ('submit', function (event) {
     
-    event.preventDefault()
-    
-    validateName()
-    validateCar()
-    validateStartDate()
-    validateNumOfDays()
-    validateCC()
-    validateCVV()
-    validateExpiration()   
-    giveCost()
-    
-})
+            event.preventDefault()
+            
+            validateName()
+            validateCar()
+            validateStartDate()
+            validateNumOfDays()
+            validateCC()
+            validateCVV()
+            validateExpiration()   
+            giveCost()
+            
+        })
+    }
 
-//helper functions
+    //helper functions
 
 
-function luhnCheck(num) {
+luhnCheck(num) {
     var sum = 0;
     for (var i = 0; i < num.length; i++) {
         var intVal = parseInt(num.substr(i, 1));
@@ -39,34 +40,19 @@ function luhnCheck(num) {
     return (sum % 10) == 0;
 }
 
-function makeValid(parentElement){
+ makeValid(parentElement){
     parentElement.classList.add('input-valid')
     parentElement.classList.remove('input-invalid')
 
 }
 
- function makeInvalid(parentElement){
+ makeInvalid(parentElement){
     parentElement.classList.add('input-invalid')
     parentElement.classList.remove('input-valid')
     formIsValid = false
 }
-
-function errormsg(fieldID){
-    let errordiv = document.createElement('div')
-    let errormsg = document.createTextNode('This field is required')
-    errordiv.appendChild(errormsg)
-    document.getElementById(fieldID).appendChild(errordiv)
-}
-
-/*function removeErrorMessage () {
-    let errormsg = document.getElementById('errordiv')
-    errormsg.remove() 
-}*/
-
-
-
 //validating functions
-function validateName (){
+validateName (){
     let nameInput = document.querySelector('#name')
     let nameValue = nameInput.value 
     let nameParent = nameInput.parentElement
@@ -86,7 +72,7 @@ function validateName (){
     }
 }
 
-function validateCar (){
+validateCar (){
     let carYearInput = document.querySelector('#car-year')
     carYearInput.setAttribute('type', 'number')
     let carYearValue = carYearInput.value 
@@ -113,36 +99,7 @@ function validateCar (){
     } 
 }
 
-/*function validateCarMake (){
-     
-
-    if(carMakeValue){
-        console.log('make is valid')
-        makeValid(makeparent)
-
-    }else{
-        console.log('make is not valid')
-       makeInvalid(makeparent)
-        errormsg('car-field')
-    }
-}
-
-    function validateCarModel() {
-       
-
-        if (carModelValue){
-            console.log('model is valid')
-            makeValid(modelparent)
-        } else {
-            console.log('model is invalid')
-            makeInvalid(modelparent)
-            errormsg('car-field')
-        }
-          
-    }*/
-
-
-    function validateStartDate (){
+    validateStartDate (){
         let startDateInput = document.querySelector('#start-date')
         let startDateValue = startDateInput.value
         console.log(startDateValue)
@@ -152,9 +109,7 @@ function validateCar (){
         console.log (todaysDate)
         document.getElementsByTagName('label')[2].setAttribute('id', 'start-date-label')
         let startDateLabel = document.querySelector('#start-date-label')
-        //determine current date and store in variable
-        //compare to startDateValue
-        //need to convert startDateValue into date object to compare to todaysDate
+
 
         if( startDateValue > todaysDate){
             console.log('date is valid')
@@ -168,7 +123,7 @@ function validateCar (){
         }
 }
 
-function validateNumOfDays(){
+validateNumOfDays(){
     let numOfDaysinput = document.querySelector('#days')
     numOfDaysinput.setAttribute('type', 'number')
     let numOfDaysValue = numOfDaysinput.value
@@ -190,7 +145,7 @@ function validateNumOfDays(){
 }
 
 
-function validateCC(){
+validateCC(){
     let CCinput = document.querySelector('#credit-card')
     let CCValue = CCinput.value
     let CCParent = CCinput.parentElement
@@ -213,7 +168,7 @@ function validateCC(){
 
 
 
-function validateCVV(){
+validateCVV(){
     let cvvinput = document.querySelector('#cvv')
     let cvvValue = cvvinput.value
     let cvvParent= cvvinput.parentElement
@@ -234,7 +189,7 @@ function validateCVV(){
 }
 
 
-function validateExpiration (){
+validateExpiration (){
     let expirationinput = document.querySelector('#expiration')
     let expirationValue =  expirationinput.value
     let expMonth = expirationValue.substring(0,2)
@@ -259,7 +214,7 @@ function validateExpiration (){
     }
 }
 
-function giveCost() {
+giveCost() {
     let dateInput = document.querySelector("#start-date")
         let dateInfo = dateInput.valueAsNumber 
         let dateParent = dateInput.parentElement
@@ -280,5 +235,20 @@ function giveCost() {
         }  
         window.alert("Your total is $" + cost + ".00")
     }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
     
       
