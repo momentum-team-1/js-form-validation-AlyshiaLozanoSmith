@@ -19,7 +19,6 @@ let form = document.querySelector('#parking-form')
             this.validateCC()
             this.validateCVV()
             this.validateExpiration()   
-            //this.giveCost()
             
         }
     
@@ -215,28 +214,6 @@ validateExpiration (){
         expLabel.textContent ='Expiration Date is not valid'
     }
 }
-
-/*giveCost() {
-    let dateInput = document.querySelector("#start-date")
-        let dateInfo = dateInput.valueAsNumber 
-        let dateParent = dateInput.parentElement
-        let day = new Date(dateInfo).getDay();
-        let daysInput = document.querySelector("#days")
-        let daysInfo = daysInput.value 
-        dateInfo = new Date(dateInfo);
-        let cost = 0
-        let week = new Array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
-        for (let i = 0; i < this.daysInfo; i++) {
-            if (this.day === 5 || this.day === 6) {
-                cost += 7;
-            }else {
-                this.cost += 5;
-            }
-            console.log(cost)
-            this.day = (day % 7) + 1;
-        }  
-        window.alert("Your total is $" + cost + ".00")
-    }*/
 
 }
 
