@@ -17,9 +17,9 @@
           <input id="name" type="text">
          </div>
 
-        <div class="input-field" id="car-field">
+        <div class="input-field" >
           <label for="car-year">Car</label>
-          <div class="input-group">
+          <div class="input-group" id="car-field">
             <input id="car-year" type="number" placeholder="Year">
             <input id="car-make" type="text" placeholder="Make">
             <input id="car-model" type="text" placeholder="Model">
@@ -60,6 +60,11 @@
         <div class="input-field">
           <button id="submit-button" type="submit">Make reservation</button>
         </div>
+        <div class='totalfield'>
+          <label for="totalCostField"> Your Total: </label>
+
+        </div>
+        
       </form>
       <div id="total"></div>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.1/moment.min.js" integrity="sha256-epLhbUf8psw8cUHu0hJ5eabk6CPexNJpCbsc0q4ougI=" crossorigin="anonymous"></script>

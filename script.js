@@ -1,12 +1,12 @@
 let form = document.querySelector('#parking-form')
     let name
-    let formIsValid
+    
 
     form.addEventListener ('submit', function (event) {
     
         event.preventDefault()
         new Form()
-        giveCost()
+        getCost()
     })
 
     class Form {
@@ -18,12 +18,11 @@ let form = document.querySelector('#parking-form')
             this.validateNumOfDays()
             this.validateCC()
             this.validateCVV()
-            this.validateExpiration()   
-            
+            this.validateExpiration()
         }
     
 
-    //helper functions
+    
 
 
 luhnCheck(num) {
@@ -50,9 +49,11 @@ luhnCheck(num) {
  makeInvalid(parentElement){
     parentElement.classList.add('input-invalid')
     parentElement.classList.remove('input-valid')
-    formIsValid = false
+    
 }
-//validating functions
+
+
+
 validateName (){
     let nameInput = document.querySelector('#name')
     let nameValue = nameInput.value 
@@ -61,15 +62,10 @@ validateName (){
     let nameLabel = document.querySelector('#name-label') 
 
     if(nameValue){
-        console.log('name is valid')
         this.makeValid(nameParent)
-        nameLabel.textContent = 'Name'
-
-    }else{
-        console.log('name is not valid')
+       }else{
        this.makeInvalid(nameParent)
-       nameLabel.textContent = 'Name is not valid'
-       
+       nameLabel.textContent = 'Name is not valid'  
     }
 }
 
@@ -78,7 +74,7 @@ validateCar (){
     carYearInput.setAttribute('type', 'number')
     let carYearValue = carYearInput.value 
     let carField = document.querySelector('#car-field')
-    carField = carField.parentElement
+    let carParent = carField.parentElement
     let carModelInput = document.querySelector('#car-model')
     let carModelValue = carModelInput.value
     let carMakeInput = document.querySelector('#car-make')
@@ -89,36 +85,27 @@ validateCar (){
     
   
     if(carYearValue > 1900 && carYearValue <= 2020 && carModelValue !== '' && carMakeValue !== ''){
-        console.log('year is valid')
-       this.makeValid(carField)
+       this.makeValid(carParent)
        carLabel.textContent='Car'
-
     }else {
-        
-       this.makeInvalid(carField)
-       carLabel.textContent = 'Year, Make, and Model are invalid'
+        this.makeInvalid(carParent)
+       carLabel.textContent = 'Year, Make, and/or Model are invalid'
     } 
 }
 
     validateStartDate (){
         let startDateInput = document.querySelector('#start-date')
         let startDateValue = startDateInput.value
-        console.log(startDateValue)
         startDateValue = new Date(startDateValue)
         let startdateparent = startDateInput.parentElement 
         let todaysDate = new Date()
-        console.log (todaysDate)
         document.getElementsByTagName('label')[2].setAttribute('id', 'start-date-label')
         let startDateLabel = document.querySelector('#start-date-label')
 
 
         if( startDateValue > todaysDate){
-            console.log('date is valid')
            this.makeValid(startdateparent)
-           startDateLabel.textContent = 'Start Date'
-    
         }else{
-            console.log('date is not valid')
             this.makeInvalid(startdateparent)
             startDateLabel.textContent='Start date is invalid'
         }
@@ -134,12 +121,8 @@ validateNumOfDays(){
     
 
     if(numOfDaysValue >= 1 && numOfDaysValue <= 30){
-        console.log('number of days is valid')
         this.makeValid(numOfDaysParent)
-        daysLabel.textContent = 'Number of Days'
-
     }else{
-        console.log('number of days is not valid')
         this.makeInvalid(numOfDaysParent)
         daysLabel.textContent = 'Number of days is not valid'
     }
@@ -155,12 +138,8 @@ validateCC(){
     let CCLabel = document.querySelector('#CC-label')
 
     if(CCValue && CCregex.test(CCValue) && this.luhnCheck(CCValue)){
-        console.log('credit card number of days is valid')
         this.makeValid(CCParent)
-        CCLabel.textContent = 'Credit Card'
-
     }else{
-        console.log('credit card number is not valid')
         this.makeInvalid(CCParent)
         CCLabel.textContent = 'Credit Card Number is invalid'
     }
@@ -176,14 +155,10 @@ validateCVV(){
     let cvvregex= new RegExp("^[0-9]{3}$")
     document.getElementsByTagName('label')[5].setAttribute('id', 'cvv-label')
     let cvvLabel = document.querySelector('#cvv-label')
-    //must be a 3 digit number (regx?)
-    if(cvvValue && cvvregex.test(cvvValue)){
-        console.log('CVV is valid')
-        this.makeValid(cvvParent)
-        cvvLabel.textContent = 'CVV'
 
-    }else{
-        console.log('CVV is not valid')
+    if(cvvValue && cvvregex.test(cvvValue)){
+        this.makeValid(cvvParent)
+      }else{
        this.makeInvalid(cvvParent)
         cvvLabel.textContent = 'CVV is invalid'
     }
@@ -199,48 +174,54 @@ validateExpiration (){
     let todayMonth = todaysDate.getMonth() +1
     let todayYear =todaysDate.getFullYear() %100 
     let expirationparent = expirationinput.parentElement
-    
     document.getElementsByTagName('label')[6].setAttribute('id', 'exp-label')
     let expLabel = document.querySelector('#exp-label')
   
     if(expYear >= todayYear && expMonth >= todayMonth){
-        console.log('expiration date is valid')
         this.makeValid(expirationparent)
         expLabel.textContent ='Expiration Date'
 
     }else {
-        console.log('expiration date is not valid')
         this.makeInvalid(expirationparent)
         expLabel.textContent ='Expiration Date is not valid'
     }
 }
 
+
 }
 
-    
+function getCost() {
+    let dateInput = document.querySelector("#start-date")
+        let dateInfo = dateInput.valueAsNumber 
+        let day = new Date(dateInfo).getDay();
+        let daysInput = document.querySelector("#days")
+        let daysInfo = daysInput.value 
+        dateInfo = new Date(dateInfo);
+        let cost = 0
+        for (let i = 0; i < daysInfo; i++) {
+            if (day === 5 || day === 6) {
+                cost += 7;
+            }else {
+                cost += 5;
+            }
+             day = (day % 7) + 1;
+        }  
+        
+        document.getElementsByTagName('label')[7].setAttribute('id', 'total-label')
+        let totalLabel = document.querySelector('#total-label')
+        totalLabel.textContent = 'Your Total: $' + cost +'.00'
+        
+    }  
 
-
-    function giveCost() {
-        let dateInput = document.querySelector("#start-date")
-            let dateInfo = dateInput.valueAsNumber 
-            let dateParent = dateInput.parentElement
-            let day = new Date(dateInfo).getDay();
-            let daysInput = document.querySelector("#days")
-            let daysInfo = daysInput.value 
-            dateInfo = new Date(dateInfo);
-            let cost = 0
-            let week = new Array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
-            for (let i = 0; i < daysInfo; i++) {
-                if (day === 5 || day === 6) {
-                    cost += 7;
-                }else {
-                    cost += 5;
-                }
-                console.log(cost)
-                 day = (day % 7) + 1;
-            }  
-            window.alert("Your total is $" + cost + ".00")
+    /*function removeText(){
+        if (document.getElementById('totalCostSpan') != undefined){
+            totalCostSpan.textContent = ''
         }
+    }*/
+     
+   
+
+    
 
 
 
